@@ -23,7 +23,12 @@
       var next = arguments[arguments.length - 1];
       world.browser.
         end().
-        call(next);
+        call(function() {
+          if (helper.world.meteor) {
+            helper.world.meteor.kill('SIGKILL');
+          }
+          next();
+        });
     });
 
   };

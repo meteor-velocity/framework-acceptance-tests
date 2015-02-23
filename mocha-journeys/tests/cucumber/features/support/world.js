@@ -10,12 +10,16 @@
 
       helper.world = this;
 
+      helper.world.cwd = '/Users/sam/sandbox';
+
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
 
       Package['xolvio:webdriver'].wdio.getGhostDriver(function (browser) {
         helper.world.browser = browser;
         browser.call(next);
       });
+
+
 
     };
 
