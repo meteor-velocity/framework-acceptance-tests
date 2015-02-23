@@ -86,8 +86,6 @@
 
     });
 
-
-
     this.Then(/^I should see a green dot in the the velocity html reporter$/, function (callback) {
       // FIXME should be .passed when it's green
       helper.world.browser.waitForExist('.display-toggle.passed')
@@ -101,11 +99,12 @@
     });
 
     this.Then(/^I should see "([^"]*)" in the Velocity reporter$/, function (elementText, callback) {
-        helper.world.browser.saveScreenshot('/tmp/screenshot.png')
-        helper.world.browser.waitForVisible('//div[@id = "velocityOverlay" and contains(text(), "' + elementText + '")]', function (err, element) {
-          assert.equal(err, null, elementText + ': not found');
-        }).
-        call(callback);
+        helper.world.browser.pause(3000)
+          .waitForVisible('.velocity-summary-text')
+          .getText('div.velocity-summary-text', function(err, text) {
+            assert(text.indexOf(elementText) != -1, elementText + ": NOT FOUND");
+            callback();
+        });
     });
 
     this.When(/^I navigate to "([^"]*)"$/, function (path, callback) {
@@ -114,7 +113,19 @@
         call(callback);
     });
 
+    this.When(/^I click the Velocity reporter button$/, function (callback) {
+      // helper.world.browser.click('button.display-toggle').call(callback);
+      helper.world.browser
+        .execute(function() { $("button.display-toggle").click() })
+        .call(callback);
+    });
+
+    this.Then(/^I should see a button labelled "([^"]*)"$/, function (elementText, callback) {
+      helper.world.browser.getText('button.copy-sample-tests', function (err, text) {
+        assert(text.indexOf(elementText) != -1, elementText + ": NOT FOUND");
+        callback();
+      })
+    });
 
   };
-
 })();

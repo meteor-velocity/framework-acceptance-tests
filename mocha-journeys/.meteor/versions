@@ -58,5 +58,5 @@ velocity:shim@0.1.0
 velocity:test-proxy@0.0.4
 webapp@1.1.6
 webapp-hashing@1.0.2
-xolvio:cucumber@0.3.9
+xolvio:cucumber@0.3.10
 xolvio:webdriver@0.2.5
