@@ -10,7 +10,7 @@
 
       helper.world = this;
 
-      helper.world.cwd = '/Users/sam/sandbox';
+      helper.world.cwd = '/tmp';
 
       helper.world.cucumber = Package['xolvio:cucumber'].cucumber;
 

@@ -40,7 +40,6 @@
         }
 
       });
-
     });
 
     this.Given(/^I cd to "([^"]*)"$/, function (directory, callback) {
@@ -90,23 +89,29 @@
 
 
     this.Then(/^I should see a green dot in the the velocity html reporter$/, function (callback) {
-      // Write code here that turns the phrase above into concrete actions
-      callback.pending();
+      // FIXME should be .passed when it's green
+      helper.world.browser.waitForExist('.display-toggle.passed')
+        .waitForVisible('.display-toggle.passed')
+        .call(callback);
     });
 
     this.Then(/^I click the green dot$/, function (callback) {
       // Write code here that turns the phrase above into concrete actions
-      callback.pending();
+      helper.world.browser.execute(function() { $("button.display-toggle").click() }).call(callback);
     });
 
-    this.Then(/^I should see "([^"]*)" in the Velocity reporter$/, function (arg1, callback) {
-      // Write code here that turns the phrase above into concrete actions
-      callback.pending();
+    this.Then(/^I should see "([^"]*)" in the Velocity reporter$/, function (elementText, callback) {
+        helper.world.browser.saveScreenshot('/tmp/screenshot.png')
+        helper.world.browser.waitForVisible('//div[@id = "velocityOverlay" and contains(text(), "' + elementText + '")]', function (err, element) {
+          assert.equal(err, null, elementText + ': not found');
+        }).
+        call(callback);
     });
 
-    this.When(/^I navigate to "([^"]*)"$/, function (arg1, callback) {
-      // Write code here that turns the phrase above into concrete actions
-      callback.pending();
+    this.When(/^I navigate to "([^"]*)"$/, function (path, callback) {
+      helper.world.browser.
+        url(path).
+        call(callback);
     });
 
 
